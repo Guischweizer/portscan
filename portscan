@@ -2,21 +2,40 @@
 from http import client
 import socket
 
-ports = [21,22,23,25,53,80,110,111,135,139,143,332,443,445,993,995,1723,3306,3389,5900]
+try:
+    ports = [21,22,23,25,53,80,110,111,135,139,143,332,443,445,993,995,1723,3306,3389,5900]
 
-ip = input("Enter the IP or URL: ")
-portsFound = False
+    ip = input("Enter the IP or URL: ")
+    portsFound = False
 
-for port in ports:
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.settimeout(0.1)
-    code = client.connect_ex((ip, port))
-    if code == 0:
-        portsFound = True
-        print(port, "OPEN")
+    for port in ports:
 
-if portsFound == False:
-    print("We couldnt find any open port! :c")
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        client.settimeout(0.1)
+        try:
+            code = client.connect_ex((ip, port))
+
+            if code == 0:
+                portsFound = True
+                print("\n\n", port, "OPEN")
+
+            if portsFound == False:
+                print("\n\n\nWe couldnt find any open port! :c")
+
+            break
+
+        except Exception:
+            print("\n""Ops! Verify if you provided a valid input!! D:")
+            print("Your input was: ", ip)
+            print("-----------------------------------------")
+            print("Verify it and try again")
+            print("-----------------------------------------")
+            ip = input("\n\nEnter the IP or URL again: ")
+
+except KeyboardInterrupt:
+    print("\n\n\n\n\n\nSee you soon! <3")        
+
 
 
 
